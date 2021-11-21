@@ -7,12 +7,13 @@ const util = require("./util.js");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
-app.get('/api/hello', (req, res) => {
-    res.send({express: 'Hello From Express'});
-});
 
-app.get('/api/1', async (req, res) => {
-    const json = await util.toJson("./data/GDP Growth Rate -API_NY.GDP.MKTP.KD.ZG_DS2_en_csv_v2_3158928.csv")
+const fileIds = {
+    "1": "GDP Growth Rate -API_NY.GDP.MKTP.KD.ZG_DS2_en_csv_v2_3158928.csv"
+}
+
+app.get('/api/:id', async (req, res) => {
+    const json = await util.toJson(`./data/${fileIds[req.params.id]}`)
     res.send(json);
 });
 
