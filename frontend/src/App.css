@@ -2,7 +2,7 @@
     box-sizing: border-box;
 }
 
-.layout {
+.flex, .layout {
     display: flex;
 }
 
@@ -34,4 +34,14 @@
 
 .center {
     text-align: center;
+}
+
+.predict {
+    width: 728px;
+    padding-left: 40px;
+}
+
+.flex-space{
+    display: flex;
+    justify-content: space-between;
 }

@@ -2,14 +2,18 @@ import React, {useEffect, useRef, useState} from 'react';
 import './App.css';
 import Timeseries from "./components/timeseries";
 import {metrics, apis} from "../src/util";
+import Predict from "./components/predict";
 
 const App = () => {
 
     const [metric, setMetric] = useState({month: [], count: []});
     const [country, setCountry] = useState("usa");
     const [dataId, setDataId] = useState("1");
+    const [annoteText, setAnnoteText] = useState("");
+    const [showPredict, setShowPredict] = useState(false);
 
     const countryEle = useRef();
+    const annotateEle = useRef();
 
     useEffect(() => {
         (async () => {
@@ -37,10 +41,19 @@ const App = () => {
     const handleOnDrop = (e) => {
         setDataId(e.dataTransfer.getData("id"))
     }
+
+    const handleOnAnnotate = () => {
+        const text = annotateEle.current.value;
+        setAnnoteText(text);
+    }
+
+    const handleOnPredict = () => {
+        setShowPredict(!showPredict)
+    }
     return (
         <div className="body">
             <div className="margin-top">
-                Country
+                Country&nbsp;&nbsp;
                 <select ref={countryEle} value={country} onChange={handleCountryChange}>
                     <option value="usa">USA</option>
                     <option value="china">China</option>
@@ -55,6 +68,9 @@ const App = () => {
                             {m.name}
                         </div>
                     })}
+                    <div className="margin-top center">
+                        <button onClick={handleOnPredict}>{!showPredict ? "Predict" : "Show chart"}</button>
+                    </div>
                 </div>
 
                 <div onDragOver={handleOnDragOver} onDrop={handleOnDrop}>
@@ -65,7 +81,22 @@ const App = () => {
                             })[0].name}
                         </b>
                     </div>
-                    <Timeseries metric={metric}/>
+                    {
+                        showPredict
+                            ? <Predict/>
+                            : <Timeseries metric={metric}/>
+                    }
+                </div>
+                <div>
+                    <div>
+                        <input type="text" ref={annotateEle}></input>
+                    </div>
+                    <div className="margin-top">
+                        {annoteText || "-"}
+                    </div>
+                </div>
+                <div>
+                    <button onClick={handleOnAnnotate}>Annotate</button>
                 </div>
             </div>
         </div>
