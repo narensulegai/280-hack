@@ -606,17 +606,18 @@ const Timeseries = (props) => {
     }
 
     useEffect(() => {
+        console.log("in comp", props.metric.count, props.metric.month);
         rootEle.current.innerHTML = "";
-        if (props.metricCount.length > 1) {
-            drawChart(rootEle.current, "Metric Name", props.metricCount, props.metricMonths);
+        if (props.metric.count.length > 1) {
+            drawChart(rootEle.current, props.metric.title, props.metric.count, props.metric.month);
         }
-    }, [props.metricCount, props.metricMonths])
+    }, [props.metric])
 
     const rootEle = useRef()
 
     return (
         <div>
-            {props.metricCount.length < 2 && <div>Nothing to show</div>}
+            {props.metric.count.length < 2 && <div>Nothing to show</div>}
             <div className="metric-modal" ref={rootEle}/>
         </div>
     )
