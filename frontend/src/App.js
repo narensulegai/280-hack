@@ -11,19 +11,15 @@ const App = () => {
 
     const countryEle = useRef();
 
-    const loadData = async () => {
-        const response = await fetch(`/api/${dataId}`);
-        const body = await response.json();
-        const title = apis[dataId][country];
-        const yearCol = apis[dataId].yearCol;
-        const metricCount = body.map(d => parseFloat(d[title]) || 0)
-        const metricMonth = body.map(d => `${d[yearCol]}-01`)
-        setMetric({count: metricCount, month: metricMonth, title})
-    }
-
     useEffect(() => {
         (async () => {
-            await loadData()
+            const response = await fetch(`/api/${dataId}`);
+            const body = await response.json();
+            const title = apis[dataId][country];
+            const yearCol = apis[dataId].yearCol;
+            const metricCount = body.map(d => parseFloat(d[title]) || 0)
+            const metricMonth = body.map(d => `${d[yearCol]}-01`)
+            setMetric({count: metricCount, month: metricMonth, title})
         })()
     }, [country, dataId])
 
@@ -42,8 +38,8 @@ const App = () => {
         setDataId(e.dataTransfer.getData("id"))
     }
     return (
-        <div>
-            <div>
+        <div className="body">
+            <div className="margin-top">
                 Country
                 <select ref={countryEle} value={country} onChange={handleCountryChange}>
                     <option value="usa">USA</option>
@@ -51,16 +47,24 @@ const App = () => {
                     <option value="india">India</option>
                 </select>
             </div>
-            <div className="layout">
-
+            <div className="layout margin-top">
                 <div>
                     {metrics.map((m) => {
-                        return <div draggable={true} key={m.aipId} onDragStart={handleOnDragStart} dataid={m.aipId}>
+                        return <div className="metric" draggable={true} key={m.aipId} onDragStart={handleOnDragStart}
+                                    dataid={m.aipId}>
                             {m.name}
                         </div>
                     })}
                 </div>
+
                 <div onDragOver={handleOnDragOver} onDrop={handleOnDrop}>
+                    <div className="center">
+                        <b>
+                            {metrics.filter((d) => {
+                                return d.aipId === dataId
+                            })[0].name}
+                        </b>
+                    </div>
                     <Timeseries metric={metric}/>
                 </div>
             </div>

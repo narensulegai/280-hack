@@ -11,3 +11,27 @@
     width: 100px;
     background: gold;
 }
+
+.metric:first-child {
+    border-top: 1px solid black;
+}
+
+.metric {
+    border-bottom: 1px solid black;
+    border-right: 1px solid black;
+    border-left: 1px solid black;
+    padding: 5px 10px;
+    cursor: grab;
+}
+
+.margin-top {
+    margin-top: 20px;
+}
+
+.body {
+    padding: 0 10px;
+}
+
+.center {
+    text-align: center;
+}
