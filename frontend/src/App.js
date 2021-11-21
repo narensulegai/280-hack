@@ -1,16 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import './App.css';
 import Timeseries from "./components/timeseries";
-
-
-const apis = {
-    "1": {
-        yearCol: "Year",
-        india: "GDP growth (annual %) India",
-        china: "GDP growth (annual %) China",
-        usa: "GDP growth (annual %) USA"
-    },
-}
+import {metrics, apis} from "../src/util";
 
 const App = () => {
 
@@ -51,7 +42,7 @@ const App = () => {
         setDataId(e.dataTransfer.getData("id"))
     }
     return (
-        <div className="layout">
+        <div>
             <div>
                 Country
                 <select ref={countryEle} value={country} onChange={handleCountryChange}>
@@ -60,13 +51,18 @@ const App = () => {
                     <option value="india">India</option>
                 </select>
             </div>
-            <div>
-                <div draggable={true} onDragStart={handleOnDragStart} dataid="1">
-                    GDP Growth Rate
+            <div className="layout">
+
+                <div>
+                    {metrics.map((m) => {
+                        return <div draggable={true} key={m.aipId} onDragStart={handleOnDragStart} dataid={m.aipId}>
+                            {m.name}
+                        </div>
+                    })}
                 </div>
-            </div>
-            <div onDragOver={handleOnDragOver} onDrop={handleOnDrop}>
-                <Timeseries metric={metric}/>
+                <div onDragOver={handleOnDragOver} onDrop={handleOnDrop}>
+                    <Timeseries metric={metric}/>
+                </div>
             </div>
         </div>
     );
