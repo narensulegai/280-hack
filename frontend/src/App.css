@@ -5,3 +5,9 @@
 .layout {
     display: flex;
 }
+
+.drop {
+    height: 100px;
+    width: 100px;
+    background: gold;
+}

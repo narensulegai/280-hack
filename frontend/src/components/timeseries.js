@@ -606,7 +606,6 @@ const Timeseries = (props) => {
     }
 
     useEffect(() => {
-        console.log("in comp", props.metric.count, props.metric.month);
         rootEle.current.innerHTML = "";
         if (props.metric.count.length > 1) {
             drawChart(rootEle.current, props.metric.title, props.metric.count, props.metric.month);
