@@ -16,15 +16,19 @@ const Dashboard = ({currentUser, email}) => {
 
     useEffect(() => {
         (async () => {
-            const response = await fetch(`/api/data/${dataId}`);
-            const body = await response.json();
-            const title = apis[dataId][country];
-            const yearCol = apis[dataId].yearCol;
+            if (!localStorage.getItem(dataId)) {
+                const response = await fetch(`/api/data/${dataId}`)
+                const body = await response.json()
+                localStorage.setItem(dataId, JSON.stringify(body))
+            }
+            const body = JSON.parse(localStorage.getItem(dataId))
+            const title = apis[dataId][country]
+            const yearCol = apis[dataId].yearCol
             const metricCount = body.map(d => parseFloat(d[title]) || 0)
             const metricMonth = body.map(d => `${d[yearCol]}-01`)
             setMetric({count: metricCount, month: metricMonth, title})
             {
-                const body = await fetch(`/api/annotations`);
+                const body = await fetch(`/api/annotations`)
                 const annotations = await body.json();
                 setAnnoteText(annotations[email] || "")
             }
