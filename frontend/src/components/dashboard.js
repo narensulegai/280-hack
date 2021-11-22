@@ -16,7 +16,8 @@ const Dashboard = ({currentUser, email}) => {
 
     useEffect(() => {
         (async () => {
-            if (!localStorage.getItem(dataId)) {
+            // if (!localStorage.getItem(dataId)) {
+            if (true) {
                 const response = await fetch(`/api/data/${dataId}`)
                 const body = await response.json()
                 localStorage.setItem(dataId, JSON.stringify(body))

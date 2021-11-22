@@ -13,7 +13,8 @@ const fileIds = {
     "2": "GDP USD - API_NY.GDP.MKTP.CD_DS2_en_csv_v2_3263806.csv",
     "3": "CurrentAccountBalance-API_BN.CAB.XOKA.GD.ZS_DS2_en_csv_v2_3158921.csv",
     "4": "Foreign direct investment, net (BoP, current US$) - API_BN.KLT.DINV.CD_DS2_en_csv_v2_3158846.csv",
-    "5":"Foreign direct investment, net outflows (BoP, current US$) - BM.KLT.DINV.CD.WD.csv"
+    "5": "Foreign direct investment, net outflows (BoP, current US$) - BM.KLT.DINV.CD.WD.csv",
+    "6": "Foreign direct investment, net inflows (% of GDP) - API_BX.KLT.DINV.WD.GD.ZS_DS2_en_csv_v2_3159100.csv"
 }
 const annotations = {}
 
@@ -27,7 +28,6 @@ app.get('/api/annotations', async (req, res) => {
 });
 
 app.post('/api/annotation/:id', async (req, res) => {
-    console.log(req.body)
     annotations[req.body.email] = req.body.text
     res.send(annotations);
 });
