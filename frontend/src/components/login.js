@@ -29,7 +29,7 @@ const Login = ({onLogin}) => {
                 </div>
                 <div>
                     Password&nbsp;&nbsp;&nbsp;
-                    <input ref={passwordEle} type="text"/>
+                    <input ref={passwordEle} type="password"/>
                 </div>
             </div>
             <div className="margin-top">
