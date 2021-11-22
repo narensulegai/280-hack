@@ -16,8 +16,7 @@ const Dashboard = ({currentUser, email}) => {
 
     useEffect(() => {
         (async () => {
-            // if (!localStorage.getItem(dataId)) {
-            if (true) {
+            if (!localStorage.getItem(dataId)) {
                 const response = await fetch(`/api/data/${dataId}`)
                 const body = await response.json()
                 localStorage.setItem(dataId, JSON.stringify(body))
@@ -84,7 +83,9 @@ const Dashboard = ({currentUser, email}) => {
                     <div className="margin-top center">
                         {currentUser
                             ? "You are a researcher"
-                            : <button onClick={handleOnPredict}>{!showPredict ? "Predict" : "Show chart"}</button>}
+                            : <button onClick={handleOnPredict} className="margin-top">
+                                {!showPredict ? "Predict" : "Show chart"}
+                            </button>}
                     </div>
                 </div>
                 <div onDragOver={handleOnDragOver} onDrop={handleOnDrop}>
