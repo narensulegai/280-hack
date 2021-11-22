@@ -23,6 +23,12 @@ const apis = {
         china: "Foreign direct investment, net (BoP, current US$) China",
         usa: "Foreign direct investment, net (BoP, current US$) USA"
     },
+    "5": {
+        yearCol: "Year",
+        india: "Foreign direct investment, net outflows (BoP, current US$) India",
+        china: "Foreign direct investment, net outflows (BoP, current US$) China",
+        usa: "Foreign direct investment, net outflows (BoP, current US$) USA"
+    }
 }
 
 const metrics = [
@@ -30,6 +36,7 @@ const metrics = [
     {name: "GDP (current US$)", aipId: "2"},
     {name: "Current Account Balance", aipId: "3"},
     {name: "Foreign direct investment, net (BoP, current US$)", aipId: "4"},
+    {name: "Foreign direct investment, net outflows (BoP, current US$)", aipId: "5"},
 ]
 
 module.exports = {

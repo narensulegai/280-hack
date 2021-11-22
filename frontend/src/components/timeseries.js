@@ -357,7 +357,7 @@ const Timeseries = (props) => {
 
         vis.append("text")
             .attr("class", "y axis title")
-            .text("Monthly " + metricName)
+            .text(metricName)
             .attr("x", (-(height / 2)))
             .attr("y", 0)
             .attr("dy", "1em")
