@@ -3,7 +3,7 @@ import Timeseries from "./timeseries";
 import {metrics, apis} from "../util";
 import Predict from "./predict";
 
-const Dashboard = ({currentUser}) => {
+const Dashboard = ({currentUser, email}) => {
 
     const [metric, setMetric] = useState({month: [], count: []});
     const [country, setCountry] = useState("usa");
@@ -16,16 +16,20 @@ const Dashboard = ({currentUser}) => {
 
     useEffect(() => {
         (async () => {
-            const response = await fetch(`/api/${dataId}`);
+            const response = await fetch(`/api/data/${dataId}`);
             const body = await response.json();
             const title = apis[dataId][country];
             const yearCol = apis[dataId].yearCol;
             const metricCount = body.map(d => parseFloat(d[title]) || 0)
             const metricMonth = body.map(d => `${d[yearCol]}-01`)
             setMetric({count: metricCount, month: metricMonth, title})
+            {
+                const body = await fetch(`/api/annotations`);
+                const annotations = await body.json();
+                setAnnoteText(annotations[email] || "")
+            }
         })()
     }, [country, dataId])
-
 
     const handleCountryChange = async () => {
         setCountry(countryEle.current.value);
@@ -41,8 +45,13 @@ const Dashboard = ({currentUser}) => {
         setDataId(e.dataTransfer.getData("id"))
     }
 
-    const handleOnAnnotate = () => {
+    const handleOnAnnotate = async () => {
         const text = annotateEle.current.value;
+        await fetch(`/api/annotation/${email}`, {
+            method: "POST",
+            headers: {"content-type": "application/json"},
+            body: JSON.stringify({email, text})
+        });
         setAnnoteText(text);
     }
 
@@ -71,10 +80,8 @@ const Dashboard = ({currentUser}) => {
                         {currentUser
                             ? "You are a researcher"
                             : <button onClick={handleOnPredict}>{!showPredict ? "Predict" : "Show chart"}</button>}
-
                     </div>
                 </div>
-
                 <div onDragOver={handleOnDragOver} onDrop={handleOnDrop}>
                     <div className="center">
                         <b>
@@ -83,11 +90,9 @@ const Dashboard = ({currentUser}) => {
                             })[0].name}
                         </b>
                     </div>
-                    {
-                        showPredict
-                            ? <Predict/>
-                            : <Timeseries metric={metric}/>
-                    }
+                    {showPredict
+                        ? <Predict/>
+                        : <Timeseries metric={metric}/>}
                 </div>
                 <div>
                     <div>

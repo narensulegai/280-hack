@@ -6,12 +6,14 @@ import Login from "./components/login";
 const App = () => {
 
     const [currentUser, setCurrentUser] = useState(null)
-    const handleOnLogin = (isResearcher) => {
+    const [email, setEmail] = useState(null)
+    const handleOnLogin = (isResearcher, email) => {
         setCurrentUser(isResearcher)
+        setEmail(email)
     }
 
     return currentUser !== null
-        ? <Dashboard currentUser={currentUser}/>
+        ? <Dashboard currentUser={currentUser} email={email}/>
         : <Login onLogin={handleOnLogin}/>
 }
 
